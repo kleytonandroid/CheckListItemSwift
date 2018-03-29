@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="690.39999999999998" y="192.95352323838082"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Add Item-->
         <scene sceneID="pa5-iJ-RPE">
             <objects>
-                <tableViewController id="UAo-e0-mht" sceneMemberID="viewController">
+                <tableViewController id="UAo-e0-mht" customClass="AddItemViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KUG-RN-CQw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,6 +76,18 @@
                             <outlet property="delegate" destination="UAo-e0-mht" id="6Rd-dN-QG7"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add Item" id="Z38-fn-Qb0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="YJT-F5-kKp">
+                            <connections>
+                                <action selector="cancel" destination="UAo-e0-mht" id="ct7-rK-cMT"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Z6l-vk-Xw1">
+                            <connections>
+                                <action selector="done" destination="UAo-e0-mht" id="mw0-xc-TWx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahA-OQ-i9W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
