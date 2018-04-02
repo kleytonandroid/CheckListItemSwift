@@ -8,14 +8,32 @@
 
 import UIKit
 
-class AddItemViewController: UITableViewController {
+protocol itemDetailViewController: class {
+    func itemDetailViewControllerDidCancel(
+        _ controller: ItemDetailViewController)
+    func itemDetailViewController(_ controller: ItemDetailViewController,
+                               didFinishAdding item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDetailViewController,
+                               didFinishEditing item: ChecklistItem)
+}
+
+class ItemDetailViewController: UITableViewController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
+    var itemToEdit: ChecklistItem?
+    
+    weak var delegate: itemDetailViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text
+            doneBarButton.isEnabled = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,11 +42,19 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func cancel() {
-        navigationController?.popViewController(animated: true)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
     @IBAction func done() {
-        print("Contents of the text field: \(textField.text!)")
-        navigationController?.popViewController(animated: true)
+        if let itemToEdit = itemToEdit {
+            itemToEdit.text = textField.text!
+            delegate?.itemDetailViewController(self,
+                                            didFinishEditing: itemToEdit)
+        } else {
+            let item = ChecklistItem()
+            item.text = textField.text!
+            item.checked = false
+            delegate?.itemDetailViewController(self, didFinishAdding: item)
+        }
     }
     
     override func tableView(_ tableView: UITableView,
@@ -39,7 +65,7 @@ class AddItemViewController: UITableViewController {
     
 }
 
-extension AddItemViewController: UITextFieldDelegate{
+extension ItemDetailViewController: UITextFieldDelegate{
     
     func textField(_ textField: UITextField,
                         shouldChangeCharactersIn range: NSRange,
